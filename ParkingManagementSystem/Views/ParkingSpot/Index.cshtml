@@ -1,10 +1,45 @@
-﻿@foreach (var parkingSpot in ViewBag.parkingSpots)
-{
-    <p>@parkingSpot.ParkingSpotId</p>
-    <p>@parkingSpot.CompanyName</p>
-    <p>@parkingSpot.Latitude</p>
-    <p>@parkingSpot.Longitude</p>
-    <p>@parkingSpot.Location</p>
-    <p>@parkingSpot.TotalSpaceInSquareFeet</p>
-    <p>@parkingSpot.AvailableSpaceInSquareFeet</p>
+﻿@model List<ParkingManagementSystem.Models.ParkingSpot>
+@{
+    ViewData["Title"] = "Parking Spots";
 }
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">List of Parking Spots</h3>
+        <a class="btn btn-primary float-right" href="/ParkingSpot/Create">Create</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Location</th>
+                    <th>Total Space</th>
+                    <th>Available Space</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var parkingspot in Model)
+                {
+                    <tr>
+                        <td>@parkingspot.CompanyName</td>
+                        <td>@parkingspot.Latitude</td>
+                        <td>@parkingspot.Longitude</td>
+                        <td>@parkingspot.Location</td>
+                        <td>@parkingspot.TotalSpaceInSquareFeet</td>
+                        <td>@parkingspot.AvailableSpaceInSquareFeet</td>
+                        <td>
+                            <a class="btn btn-info mr-2" href="/ParkingSpot/Update/@parkingspot.ParkingSpotId"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-danger" href="/ParkingSpot/Delete/@parkingspot.ParkingSpotId"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>

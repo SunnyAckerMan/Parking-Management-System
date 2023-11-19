@@ -28,8 +28,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Project/ParkingManagementSystem/ParkingManagementSystem/Views/ParkingSpot/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ1Nwb3RcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project/ParkingManagementSystem/ParkingManagementSystem/Views/ParkingSpot/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ1Nwb3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/ParkingManagementSystem/ParkingManagementSystem/Views/ParkingSpot/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ1Nwb3RcVXBkYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project/ParkingManagementSystem/ParkingManagementSystem/Views/Rate/Index.cshtml]
