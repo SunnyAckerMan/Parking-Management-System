@@ -1,0 +1,58 @@
+﻿@model ParkingManagementSystem.Models.Ticket
+@{
+    ViewData["Title"] = "Add New Ticket";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Add New Ticket</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" action="/Ticket/Create">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Vehicle Number<sup class="text-danger">*</sup></label>
+                        <input type="number" id="inputName" class="form-control" name="VehicleNumber" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Owner Name<sup class="text-danger">*</sup></label>
+                        <input type="text" id="inputName" class="form-control" name="OwnerName" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Owner Phone No<sup class="text-danger">*</sup></label>
+                        <input type="number" id="inputName" class="form-control" name="OwnerPhoneNo" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Owner Email<sup class="text-danger">*</sup></label>
+                        <input type="text" id="inputName" class="form-control" name="OwnerEmail" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="inputName">Owner NID<sup class="text-danger">*</sup></label>
+                        <input type="number" id="inputName" class="form-control" name="OwnerNID" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Entry Time<sup class="text-danger">*</sup></label>
+                        <input type="time" id="inputName" class="form-control" name="EntryTime" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="inputName">Exit Time<sup class="text-danger">*</sup></label>
+                        <input type="time" id="inputName" class="form-control" name="EntryTime" required>
+                    </div>
+                </div>
+            </div>
+    <button class="btn btn-success float-right" type="submit">Save</button>
+    </form>
+</div>
+</div>
