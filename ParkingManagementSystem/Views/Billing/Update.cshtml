@@ -1,0 +1,39 @@
+﻿@model Service.Services.Billing.VmBilling
+@using Service.Common.Enums
+@{
+    ViewData["Title"] = "Edit Bill";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Edit Bill</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" action="/Billing/Update">
+            <input type="hidden" name="BillingId" value="@Model.BillingId" />
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label>Payment Status<sup class="text-danger">*</sup></label>
+                        <select class="form-control" asp-for="PaymentStatus" asp-items="Html.GetEnumSelectList<VmPaymentStatus>()" required>
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label>Amount Paid<sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" name="AmountPaid" value="@Model.AmountPaid" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                        <label>TicketIdFk</label>
+                        <input type="number" class="form-control" name="TicketIdFk" value="@Model.TicketIdFk">
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success float-right" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+

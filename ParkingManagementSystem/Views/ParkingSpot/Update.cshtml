@@ -1,4 +1,4 @@
-﻿@model ParkingManagementSystem.Models.ParkingSpot
+﻿@model Service.Services.ParkingSpot.VmParkingSpot
 @{
     ViewData["Title"] = "Edit Parking Spot";
 }
@@ -12,38 +12,38 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        <label for="inputName">Company Name<sup class="text-danger">*</sup></label>
-                        <input type="text" id="inputName" class="form-control" name="CompanyName" value="@Model.CompanyName" required>
+                        <label>Company Name<sup class="text-danger">*</sup></label>
+                        <input type="text"  class="form-control" name="CompanyName" value="@Model.CompanyName" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3">
                     <div class="form-group">
-                        <label for="inputName">Latitude<sup class="text-danger">*</sup></label>
-                        <input type="number" id="inputName" class="form-control" name="Latitude" value="@Model.Latitude" step="any" required>
+                        <label>Latitude<sup class="text-danger">*</sup></label>
+                        <input type="number"  class="form-control" name="Latitude" value="@Model.Latitude" step="any" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3">
                     <div class="form-group">
-                        <label for="inputName">Longitude<sup class="text-danger">*</sup></label>
-                        <input type="number" id="inputName" class="form-control" name="Longitude" value="@Model.Longitude" step="any" required>
+                        <label>Longitude<sup class="text-danger">*</sup></label>
+                        <input type="number"  class="form-control" name="Longitude" value="@Model.Longitude" step="any" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12">
                     <div class="form-group">
-                        <label for="inputName">Location<sup class="text-danger">*</sup></label>
+                        <label>Location<sup class="text-danger">*</sup></label>
                         <textarea class="form-control" name="Location" rows="2" required>@Model.Location</textarea>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        <label for="inputName">Total Space In Square Feet<sup class="text-danger">*</sup></label>
-                        <input type="number" id="inputName" class="form-control" step="any" name="TotalSpaceInSquareFeet" value="@Model.TotalSpaceInSquareFeet" required>
+                        <label>Total Space In Square Feet<sup class="text-danger">*</sup></label>
+                        <input type="number"  class="form-control" step="any" name="TotalSpaceInSquareFeet" value="@Model.TotalSpaceInSquareFeet" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        <label for="inputName">Available Space In Square Feet<sup class="text-danger">*</sup></label>
-                        <input type="number" id="inputName" class="form-control" name="AvailableSpaceInSquareFeet" value="@Model.AvailableSpaceInSquareFeet" step="any" required>
+                        <label>Available Space In Square Feet<sup class="text-danger">*</sup></label>
+                        <input type="number"  class="form-control" name="AvailableSpaceInSquareFeet" value="@Model.AvailableSpaceInSquareFeet" step="any" required>
                     </div>
                 </div>
             </div>

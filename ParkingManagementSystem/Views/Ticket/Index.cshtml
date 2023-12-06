@@ -1,4 +1,4 @@
-﻿@model List<ParkingManagementSystem.Models.Ticket>
+﻿@model List<Service.Services.Ticket.VmTicket>
 @{
     ViewData["Title"] = "Ticket";
 }
@@ -19,8 +19,8 @@
                     <th>Owner NID</th>
                     <th>Entry Time</th>
                     <th>Exit Time</th>
-                    <th>ParkingSpotIdFk</th>
-                    <th>RateIdFk</th>
+                    @* <th>ParkingSpotIdFk</th>
+                    <th>RateIdFk</th> *@
                 </tr>
             </thead>
             <tbody>
@@ -35,8 +35,8 @@
                         <td>@ticket.OwnerNID</td>
                         <td>@ticket.EntryTime</td>
                         <td>@ticket.ExitTime</td>
-                        <td>@ticket.ParkingSpotIdFk</td>
-                        <td>@ticket.RateIdFk</td>
+                        @* <td>@ticket.ParkingSpotIdFk</td>
+                        <td>@ticket.RateIdFk</td> *@
                         <td>
                             <a class="btn btn-info mr-2" href="/Ticket/Update/@ticket.TicketId"><i class="far fa-edit"></i></a>
                             <a class="btn btn-danger" href="/Ticket/Delete/@ticket.TicketId"><i class="far fa-trash-alt"></i></a>

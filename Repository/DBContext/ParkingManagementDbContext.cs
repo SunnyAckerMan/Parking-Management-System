@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ParkingManagementSystem.Models;
+﻿using Entity.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace ParkingManagementSystem.DBContext;
+namespace Repository.DBContext;
 
 public class ParkingManagementDbContext : DbContext
 {

@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Entity.Enums;
+using System.ComponentModel.DataAnnotations;
+namespace Entity.Models;
 
-namespace ParkingManagementSystem.Models;
-
-public class Rate
+public class Rate : BaseEntity
 {
     [Key]
     public long RateId { get; set; } 

@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ParkingManagementSystem.DBContext;
+using Repository.DBContext;
 
 #nullable disable
 
-namespace ParkingManagementSystem.Migrations
+namespace Repository.Migrations
 {
     [DbContext(typeof(ParkingManagementDbContext))]
-    [Migration("20231109172353_initial")]
-    partial class initial
+    [Migration("20231206184930_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace ParkingManagementSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ParkingManagementSystem.Models.Billing", b =>
+            modelBuilder.Entity("Entity.Models.Billing", b =>
                 {
                     b.Property<long>("BillingId")
                         .ValueGeneratedOnAdd()
@@ -35,18 +35,35 @@ namespace ParkingManagementSystem.Migrations
                     b.Property<decimal>("AmountPaid")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
 
                     b.Property<long>("TicketIdFk")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BillingId");
 
                     b.ToTable("Billings");
                 });
 
-            modelBuilder.Entity("ParkingManagementSystem.Models.ParkingSpot", b =>
+            modelBuilder.Entity("Entity.Models.ParkingSpot", b =>
                 {
                     b.Property<long>("ParkingSpotId")
                         .ValueGeneratedOnAdd()
@@ -61,6 +78,16 @@ namespace ParkingManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
@@ -74,12 +101,19 @@ namespace ParkingManagementSystem.Migrations
                     b.Property<double>("TotalSpaceInSquareFeet")
                         .HasColumnType("float");
 
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ParkingSpotId");
 
                     b.ToTable("ParkingSpots");
                 });
 
-            modelBuilder.Entity("ParkingManagementSystem.Models.Rate", b =>
+            modelBuilder.Entity("Entity.Models.Rate", b =>
                 {
                     b.Property<long>("RateId")
                         .ValueGeneratedOnAdd()
@@ -87,11 +121,28 @@ namespace ParkingManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("RateId"), 1L, 1);
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
                     b.Property<long>("ParkingSpotIdFk")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("RatePerHour")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");
@@ -101,7 +152,7 @@ namespace ParkingManagementSystem.Migrations
                     b.ToTable("Rates");
                 });
 
-            modelBuilder.Entity("ParkingManagementSystem.Models.Ticket", b =>
+            modelBuilder.Entity("Entity.Models.Ticket", b =>
                 {
                     b.Property<long>("TicketId")
                         .ValueGeneratedOnAdd()
@@ -109,11 +160,21 @@ namespace ParkingManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TicketId"), 1L, 1);
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EntryTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ExitTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
 
                     b.Property<string>("OwnerEmail")
                         .IsRequired()
@@ -136,6 +197,13 @@ namespace ParkingManagementSystem.Migrations
 
                     b.Property<long>("RateIdFk")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VehicleNumber")
                         .IsRequired()

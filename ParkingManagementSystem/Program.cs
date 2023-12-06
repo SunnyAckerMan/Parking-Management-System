@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ParkingManagementSystem.DBContext;
+using Repository.DBContext;
+using Service.Services.Billing;
+using Service.Services.ParkingSpot;
+using Service.Services.Rate;
+using Service.Services.Ticket;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +12,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ParkingManagementDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnectionString")));
+
+//Dipendency Injection
+builder.Services.AddTransient<IParkingSpotService, ParkingSpotService>();
+builder.Services.AddTransient<IBillingService, BillingService>();
+builder.Services.AddTransient<IRateService, RateService>();
+builder.Services.AddTransient<ITicketService, TicketService>();
 
 var app = builder.Build();
 

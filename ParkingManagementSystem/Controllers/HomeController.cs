@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagementSystem.Models;
-using System.Diagnostics;
 
 namespace ParkingManagementSystem.Controllers
 {

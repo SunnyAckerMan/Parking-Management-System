@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagementSystem.DBContext;
-using ParkingManagementSystem.Models;
+using Service.Services.ParkingSpot;
 
 namespace ParkingManagementSystem.Controllers;
 
 public class ParkingSpotController : Controller
 {
-    private readonly ParkingManagementDbContext _context;
-    public ParkingSpotController(ParkingManagementDbContext context)
+    private readonly IParkingSpotService _service;
+    public ParkingSpotController(IParkingSpotService Service)
     {
-        _context = context;
+        _service = Service;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-       var parkingSpotList = _context.ParkingSpots.ToList();
-        return View(parkingSpotList);
+        var data = _service.GetAll();
+        return View(data);
     }
 
     [HttpGet]
@@ -26,33 +25,27 @@ public class ParkingSpotController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(ParkingSpot model)
+    public IActionResult Create(VmParkingSpot model)
     {
-        _context.ParkingSpots.Add(model);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
+        return _service.Create(model) ? RedirectToAction("Index") : RedirectToAction("Create");
     }
 
     [HttpGet]
     public IActionResult Update(long id)
     {
-        var existingData = _context.ParkingSpots.FirstOrDefault(p => p.ParkingSpotId == id);
+        var existingData = _service.GetById(id);
         return View(existingData);
     }
 
     [HttpPost]
-    public IActionResult Update(ParkingSpot model)
+    public IActionResult Update(VmParkingSpot model)
     {
-        _context.ParkingSpots.Update(model);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
+        return _service.Update(model) ? RedirectToAction("Index") : RedirectToAction("Update");
     }
 
     public IActionResult Delete(long id)
     {
-        var existingData = _context.ParkingSpots.FirstOrDefault(p => p.ParkingSpotId == id);
-        _context.ParkingSpots.Remove(existingData);
-        _context.SaveChanges();
+        _service.Delete(id);
         return RedirectToAction("Index");
     }
 

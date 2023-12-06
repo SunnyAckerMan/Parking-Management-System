@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+namespace Entity.Models;
 
-namespace ParkingManagementSystem.Models;
-
-public class Ticket
+public class Ticket : BaseEntity
 {
     [Key]
     public long TicketId { get; set; }

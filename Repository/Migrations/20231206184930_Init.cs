@@ -1,11 +1,10 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace ParkingManagementSystem.Migrations
+namespace Repository.Migrations
 {
-    public partial class initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +16,12 @@ namespace ParkingManagementSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentStatus = table.Column<int>(type: "int", nullable: false),
                     AmountPaid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TicketIdFk = table.Column<long>(type: "bigint", nullable: false)
+                    TicketIdFk = table.Column<long>(type: "bigint", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +39,12 @@ namespace ParkingManagementSystem.Migrations
                     Longitude = table.Column<double>(type: "float", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalSpaceInSquareFeet = table.Column<double>(type: "float", nullable: false),
-                    AvailableSpaceInSquareFeet = table.Column<double>(type: "float", nullable: false)
+                    AvailableSpaceInSquareFeet = table.Column<double>(type: "float", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +59,12 @@ namespace ParkingManagementSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VehicleType = table.Column<int>(type: "int", nullable: false),
                     RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ParkingSpotIdFk = table.Column<long>(type: "bigint", nullable: false)
+                    ParkingSpotIdFk = table.Column<long>(type: "bigint", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +85,12 @@ namespace ParkingManagementSystem.Migrations
                     EntryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExitTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ParkingSpotIdFk = table.Column<long>(type: "bigint", nullable: false),
-                    RateIdFk = table.Column<long>(type: "bigint", nullable: false)
+                    RateIdFk = table.Column<long>(type: "bigint", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsArchived = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,4 @@
-﻿namespace ParkingManagementSystem.Models;
+﻿namespace Entity.Enums;
 
 public enum VehicleType
 {

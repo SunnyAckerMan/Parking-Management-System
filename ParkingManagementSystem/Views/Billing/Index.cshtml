@@ -1,5 +1,38 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Service.Services.Billing.VmBilling>
 @{
+    ViewData["Title"] = "Billing";
 }
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Billing Information</h3>
+        <a class="btn btn-primary float-right" href="/Billing/Create">Create</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Payment Status</th>
+                    <th>Amount Paid</th>
+                    <th>TicketIdFk</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var billing in Model)
+                {
+                    <tr>
+                        <td>@billing.PaymentStatus</td>
+                        <td>@billing.AmountPaid</td>
+                        <td>@billing.TicketIdFk</td>
+                        <td>
+                            <a class="btn btn-info mr-2" href="/Billing/Update/@billing.BillingId"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-danger" href="/Billing/Delete/@billing.BillingId"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>

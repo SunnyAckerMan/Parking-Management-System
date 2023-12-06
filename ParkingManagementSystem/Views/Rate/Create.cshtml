@@ -1,0 +1,31 @@
+﻿@model Service.Services.Rate.VmRate
+@using Service.Common.Enums
+@{
+    ViewData["Title"] = "Add Rate";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Add Rate</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" action="/Rate/Create">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Vehicle Type<sup class="text-danger">*</sup></label>
+                        <select class="form-control" asp-for ="VehicleType" asp-items="Html.GetEnumSelectList<VmVehicleType>()" required>
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Rate Per Hour<sup class="text-danger">*</sup></label>
+                        <input type="number"  class="form-control" name="RatePerHour" required>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success float-right" type="submit">Save</button>
+        </form>
+    </div>
+</div>

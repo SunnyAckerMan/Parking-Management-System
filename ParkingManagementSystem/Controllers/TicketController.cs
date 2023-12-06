@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagementSystem.DBContext;
-using ParkingManagementSystem.Models;
+using Service.Services.Ticket;
 
 namespace ParkingManagementSystem.Controllers;
 
 public class TicketController : Controller
 {
-    private readonly ParkingManagementDbContext _context;
-    public TicketController(ParkingManagementDbContext context)
+    private readonly ITicketService _service;
+    public TicketController(ITicketService service)
     {
-        _context = context;
+        _service = service;
     }
     [HttpGet]
     public IActionResult Index()
     {
-        var ticketList = _context.Tickets.ToList();
-        return View(ticketList);
+        return View();
     }
 
     [HttpGet]
@@ -25,33 +23,27 @@ public class TicketController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Ticket model)
+    public IActionResult Create(VmTicket model)
     {
-        _context.Tickets.Add(model);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
+        return _service.Create(model) ? RedirectToAction("Index") : RedirectToAction("Create");
     }
 
     [HttpGet]
     public IActionResult Update(long id)
     {
-        var existingData = _context.Tickets.FirstOrDefault(p => p.TicketId == id);
+        var existingData = _service.GetById(id);
         return View(existingData);
     }
 
     [HttpPost]
-    public IActionResult Update(Ticket model)
+    public IActionResult Update(VmTicket model)
     {
-        _context.Tickets.Update(model);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
+        return _service.Update(model) ? RedirectToAction("Index") : RedirectToAction("Update");
     }
 
     public IActionResult Delete(long id)
     {
-        var existingData = _context.Tickets.FirstOrDefault(p => p.TicketId == id);
-        _context.Tickets.Remove(existingData);
-        _context.SaveChanges();
+        _service.Delete(id);
         return RedirectToAction("Index");
     }
 }
