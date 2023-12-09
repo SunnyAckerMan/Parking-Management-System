@@ -12,7 +12,8 @@ public class BillingController : Controller
     }
     public IActionResult Index()
     {
-        return View();
+        var billingList = _service.GetAll();
+        return View(billingList);
     }
 
     [HttpGet]

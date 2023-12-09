@@ -13,12 +13,14 @@ public class TicketController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        var ticketList = _service.GetAll();
+        return View(ticketList);
     }
 
     [HttpGet]
     public IActionResult Create()
     {
+        //ViewBag.CompanyName = _service.GetAll();
         return View();
     }
 

@@ -13,7 +13,8 @@ public class RateController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        var rateList = _service.GetAll();
+        return View(rateList);
     }
 
     [HttpGet]
