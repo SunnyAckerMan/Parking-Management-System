@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using Repository.DBContext;
+using Repository.UnitOfWorks;
 
 namespace Service.Services.Billing;
 
 public class BillingService : IBillingService
 {
-    private readonly ParkingManagementDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<BillingService> _logger;
-    public BillingService(ParkingManagementDbContext context, ILogger<BillingService> logger)
+    public BillingService(IUnitOfWork unitOfWork, ILogger<BillingService> logger)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
@@ -21,8 +21,8 @@ public class BillingService : IBillingService
             data.PaymentStatus = (Entity.Enums.PaymentStatus)model.PaymentStatus;
             data.AmountPaid = model.AmountPaid;
             data.TicketIdFk = model.TicketIdFk;
-            _context.Billings.Add(data);
-            _context.SaveChanges();
+            _unitOfWork.Billings.Create(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }
@@ -37,12 +37,12 @@ public class BillingService : IBillingService
     {
         try
         {
-            var existingData = _context.Billings.FirstOrDefault(p => p.BillingId == id);
+            var existingData = _unitOfWork.Billings.FirstOrDefault(p => p.BillingId == id);
 
             if (existingData != null)
             {
-                _context.Billings.Remove(existingData);
-                _context.SaveChanges();
+                _unitOfWork.Billings.Delete(existingData);
+                _unitOfWork.SaveChangesAsync();
                 return true;
             }
 
@@ -57,7 +57,7 @@ public class BillingService : IBillingService
 
     public List<VmBilling> GetAll()
     {
-        var billingList = _context.Billings.ToList();
+        var billingList = _unitOfWork.Billings.GetAllEnumerable();
         var modelList = new List<VmBilling>();
         foreach (var data in billingList)
         {
@@ -73,7 +73,7 @@ public class BillingService : IBillingService
 
     public VmBilling GetById(long id)
     {
-        var existingData = _context.Billings.FirstOrDefault(p => p.BillingId == id);
+        var existingData = _unitOfWork.Billings.FirstOrDefault(p => p.BillingId == id);
         var model = new VmBilling();
         if (existingData != null)
         {
@@ -93,8 +93,8 @@ public class BillingService : IBillingService
             data.PaymentStatus = (Entity.Enums.PaymentStatus)model.PaymentStatus;
             data.AmountPaid = model.AmountPaid;
             data.TicketIdFk = model.TicketIdFk;
-            _context.Billings.Update(data);
-            _context.SaveChanges();
+            _unitOfWork.Billings.Update(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }

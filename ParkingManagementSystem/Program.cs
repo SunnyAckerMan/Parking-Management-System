@@ -1,23 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Repository.DBContext;
-using Service.Services.Billing;
-using Service.Services.ParkingSpot;
-using Service.Services.Rate;
-using Service.Services.Ticket;
+using Service.Extention;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ParkingManagementDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnectionString")));
-
-//Dipendency Injection
-builder.Services.AddTransient<IParkingSpotService, ParkingSpotService>();
-builder.Services.AddTransient<IBillingService, BillingService>();
-builder.Services.AddTransient<IRateService, RateService>();
-builder.Services.AddTransient<ITicketService, TicketService>();
+var connectionString = builder.Configuration.GetConnectionString("DevConnectionString");
+builder.Services.AddServices(builder.Configuration, connectionString);
 
 var app = builder.Build();
 

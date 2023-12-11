@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using Repository.DBContext;
+using Repository.UnitOfWorks;
 
 namespace Service.Services.Ticket;
 
 public class TicketService : ITicketService
 {
-    private readonly ParkingManagementDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<TicketService> _logger;
-    public TicketService(ParkingManagementDbContext context, ILogger<TicketService> logger)
+    public TicketService(IUnitOfWork unitOfWork, ILogger<TicketService> logger)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
@@ -28,8 +28,8 @@ public class TicketService : ITicketService
             data.ExitTime = model.ExitTime; 
             data.ParkingSpotIdFk = model.ParkingSpotIdFk; 
 
-            _context.Tickets.Add(data);
-            _context.SaveChanges();
+            _unitOfWork.Tickets.Create(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }
@@ -44,12 +44,12 @@ public class TicketService : ITicketService
     {
         try
         {
-            var existingData = _context.Tickets.FirstOrDefault(p => p.TicketId == id);
+            var existingData = _unitOfWork.Tickets.FirstOrDefault(p => p.TicketId == id);
 
             if (existingData != null)
             {
-                _context.Tickets.Remove(existingData);
-                _context.SaveChanges();
+                _unitOfWork.Tickets.Delete(existingData);
+                _unitOfWork.SaveChangesAsync();
                 return true;
             }
 
@@ -64,7 +64,7 @@ public class TicketService : ITicketService
 
     public List<VmTicket> GetAll()
     {
-        var ticketList = _context.Tickets.ToList();
+        var ticketList = _unitOfWork.Tickets.GetAllEnumerable();
         var modelList = new List<VmTicket>();
         foreach (var data in ticketList)
         {
@@ -86,7 +86,7 @@ public class TicketService : ITicketService
 
     public VmTicket GetById(long id)
     {
-        var existingData = _context.Tickets.FirstOrDefault(p => p.TicketId == id);
+        var existingData = _unitOfWork.Tickets.FirstOrDefault(p => p.TicketId == id);
         var model = new VmTicket();
         if (existingData != null)
         {
@@ -117,8 +117,8 @@ public class TicketService : ITicketService
             data.ExitTime = model.ExitTime;
             data.ParkingSpotIdFk = model.ParkingSpotIdFk;
 
-            _context.Tickets.Update(data);
-            _context.SaveChanges();
+            _unitOfWork.Tickets.Update(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }

@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using Repository.DBContext;
+using Repository.UnitOfWorks;
 
 namespace Service.Services.ParkingSpot;
 
 public class ParkingSpotService : IParkingSpotService
 {
-    private readonly ParkingManagementDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<ParkingSpotService> _logger;
-    public ParkingSpotService(ParkingManagementDbContext context, ILogger<ParkingSpotService> logger)
+    public ParkingSpotService(IUnitOfWork unitOfWork, ILogger<ParkingSpotService> logger)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
@@ -25,8 +25,8 @@ public class ParkingSpotService : IParkingSpotService
             data.Location = model.Location;
             data.TotalSpaceInSquareFeet = model.TotalSpaceInSquareFeet;
             data.AvailableSpaceInSquareFeet = model.AvailableSpaceInSquareFeet;
-            _context.ParkingSpots.Add(data);
-            _context.SaveChanges();
+            _unitOfWork.ParkingSpots.Create(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }
@@ -41,12 +41,12 @@ public class ParkingSpotService : IParkingSpotService
     {
         try
         {
-            var existingData = _context.ParkingSpots.FirstOrDefault(p => p.ParkingSpotId == id);
+            var existingData = _unitOfWork.ParkingSpots.GetById(id);
 
             if (existingData != null)
             {
-                _context.ParkingSpots.Remove(existingData);
-                _context.SaveChanges();
+                _unitOfWork.ParkingSpots.Delete(existingData);
+                _unitOfWork.SaveChangesAsync();
                 return true;
             }
 
@@ -61,7 +61,7 @@ public class ParkingSpotService : IParkingSpotService
 
     public List<VmParkingSpot> GetAll()
     {
-        var parkingSpotList = _context.ParkingSpots.ToList();
+        var parkingSpotList = _unitOfWork.ParkingSpots.GetAllEnumerable();
         var modelList = new List<VmParkingSpot>();
         foreach (var data in parkingSpotList)
         {
@@ -80,7 +80,7 @@ public class ParkingSpotService : IParkingSpotService
 
     public VmParkingSpot GetById(long id)
     {
-        var existingData = _context.ParkingSpots.FirstOrDefault(p => p.ParkingSpotId == id);
+        var existingData = _unitOfWork.ParkingSpots.FirstOrDefault(p => p.ParkingSpotId == id);
         var model = new VmParkingSpot();
         if (existingData != null)
         {
@@ -107,8 +107,8 @@ public class ParkingSpotService : IParkingSpotService
             data.Location = model.Location;
             data.TotalSpaceInSquareFeet = model.TotalSpaceInSquareFeet;
             data.AvailableSpaceInSquareFeet = model.AvailableSpaceInSquareFeet;
-            _context.ParkingSpots.Update(data);
-            _context.SaveChanges();
+            _unitOfWork.ParkingSpots.Update(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }

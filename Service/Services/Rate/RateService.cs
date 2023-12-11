@@ -1,16 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using Repository.DBContext;
-using Service.Services.Ticket;
+using Repository.UnitOfWorks;
 
 namespace Service.Services.Rate;
 
 public class RateService : IRateService
 {
-    private readonly ParkingManagementDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<RateService> _logger;
-    public RateService(ParkingManagementDbContext context, ILogger<RateService> logger)
+    public RateService(IUnitOfWork unitOfWork, ILogger<RateService> logger)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
@@ -25,8 +24,8 @@ public class RateService : IRateService
             data.ParkingSpotIdFk = model.ParkingSpotIdFk;
             
 
-            _context.Rates.Add(data);
-            _context.SaveChanges();
+            _unitOfWork.Rates.Create(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }
@@ -41,12 +40,12 @@ public class RateService : IRateService
     {
         try
         {
-            var existingData = _context.Rates.FirstOrDefault(p => p.RateId == id);
+            var existingData = _unitOfWork.Rates.FirstOrDefault(p => p.RateId == id);
 
             if (existingData != null)
             {
-                _context.Rates.Remove(existingData);
-                _context.SaveChanges();
+                _unitOfWork.Rates.Delete(existingData);
+                _unitOfWork.SaveChangesAsync();
                 return true;
             }
 
@@ -61,12 +60,12 @@ public class RateService : IRateService
 
     public List<VmRate> GetAll()
     {
-        var rateList = _context.Rates.ToList();
+        var rateList = _unitOfWork.Rates.GetAllEnumerable();
         var modelList = new List<VmRate>();
         foreach (var data in rateList)
         {
             var model = new VmRate();
-
+            model.RateId = data.RateId;
             model.VehicleType = (Common.Enums.VmVehicleType)data.VehicleType;
             model.RatePerHour = data.RatePerHour;
             model.ParkingSpotIdFk = data.ParkingSpotIdFk;
@@ -78,10 +77,11 @@ public class RateService : IRateService
 
     public VmRate GetById(long id)
     {
-        var existingData = _context.Rates.FirstOrDefault(p => p.RateId == id);
+        var existingData = _unitOfWork.Rates.FirstOrDefault(p => p.RateId == id);
         var model = new VmRate();
         if (existingData != null)
         {
+            model.RateId = existingData.RateId;
             model.VehicleType = (Common.Enums.VmVehicleType)existingData.VehicleType;
             model.RatePerHour = existingData.RatePerHour;
             model.ParkingSpotIdFk = existingData.ParkingSpotIdFk;
@@ -93,14 +93,14 @@ public class RateService : IRateService
     {
         try
         {
-            var data = new Entity.Models.Rate();
+            var data = _unitOfWork.Rates.FirstOrDefault(p => p.RateId == model.RateId);
 
             data.VehicleType = (Entity.Enums.VehicleType)model.VehicleType;
             data.RatePerHour = model.RatePerHour;
             data.ParkingSpotIdFk = model.ParkingSpotIdFk;
 
-            _context.Rates.Update(data);
-            _context.SaveChanges();
+            _unitOfWork.Rates.Update(data);
+            _unitOfWork.SaveChangesAsync();
 
             return true;
         }
