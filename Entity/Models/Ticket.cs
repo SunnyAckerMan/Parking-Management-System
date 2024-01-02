@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Entity.Models;
 
 public class Ticket : BaseEntity
@@ -14,6 +16,10 @@ public class Ticket : BaseEntity
     public string OwnerNID { get; set; } 
     public DateTime EntryTime { get; set; } 
     public DateTime? ExitTime { get; set; }
+    [ForeignKey("ParkingSpot")]
     public long ParkingSpotIdFk { get; set; }
+    public ParkingSpot ParkingSpot { get; set; }
+    [ForeignKey("Rate")]
     public long RateIdFk { get; set; }
+    public Rate Rate { get; set; }
 }

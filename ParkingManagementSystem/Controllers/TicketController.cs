@@ -20,7 +20,6 @@ public class TicketController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        //ViewBag.CompanyName = _service.GetAll();
         return View();
     }
 

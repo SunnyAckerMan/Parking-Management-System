@@ -70,6 +70,7 @@ public class TicketService : ITicketService
         {
             var model = new VmTicket();
 
+            model.TicketId = data.TicketId;
             model.VehicleNumber = data.VehicleNumber;
             model.OwnerName = data.OwnerName;
             model.OwnerPhoneNo = data.OwnerPhoneNo;
@@ -90,6 +91,7 @@ public class TicketService : ITicketService
         var model = new VmTicket();
         if (existingData != null)
         {
+            model.TicketId = existingData.TicketId;
             model.VehicleNumber = existingData.VehicleNumber;
             model.OwnerName = existingData.OwnerName;
             model.OwnerPhoneNo = existingData.OwnerPhoneNo;
